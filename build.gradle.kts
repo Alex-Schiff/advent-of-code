@@ -5,10 +5,15 @@ import org.gradle.kotlin.dsl.KotlinClosure2
 
 plugins {
     kotlin("jvm") version "1.9.20"
+    id("com.ncorti.ktfmt.gradle") version "0.15.1"
 }
 
 kotlin {
     jvmToolchain(17)
+}
+
+ktfmt { 
+    kotlinLangStyle()
 }
 
 sourceSets {

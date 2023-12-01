@@ -7,9 +7,7 @@ import io.kotest.core.extensions.Extension
 @Suppress("Unused")
 object TestConfig : AbstractProjectConfig() {
 
-    override fun extensions() = listOf<Extension>(
-        AocKtExtension()
-    )
+    override fun extensions() = listOf<Extension>(AocKtExtension())
 
     override val parallelism: Int = Runtime.getRuntime().availableProcessors()
 }
