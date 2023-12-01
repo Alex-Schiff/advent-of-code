@@ -24,4 +24,20 @@ pqr3stu8vwx
 a1b2c3d4e5f
 treb7uchet""" shouldOutput 142
         }
+        partTwo {
+            "two1nine" shouldOutput 29
+            "eightwothree" shouldOutput 83
+            "abcone2threexyz" shouldOutput 13
+            "xtwone3four" shouldOutput 24
+            "4nineeightseven2" shouldOutput 42
+            "zoneight234" shouldOutput 14
+            """two1nine
+            eightwothree
+            abcone2threexyz
+            xtwone3four
+            4nineeightseven2
+            zoneight234
+            7pqrstsixteenz""" shouldOutput
+                281
+        }
     })
