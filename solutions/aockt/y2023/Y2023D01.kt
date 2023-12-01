@@ -34,15 +34,15 @@ object Y2023D01 : Solution {
             .map {
                Pair( try {
                     Digits.valueOf(it.first).digitValue
-                } catch {
+                } catch (e: IllegalArgumentException) {
                     it.first.toInt()
                 }, try {
                     Digits.valueOf(it.second).digitValue
-                } catch {
+                } catch (e: IllegalArgumentException) {
                     it.second.toInt()
                 })
             }
-            .map{ "$it.first$it.second".toInt() }
+            .map{ "${it.first}${it.second}".toInt() }
             .sum()
             
 
