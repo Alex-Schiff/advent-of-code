@@ -3,7 +3,9 @@ package aockt.y2023
 import io.github.jadarma.aockt.core.Solution
 
 object Y2023D01 : Solution {
-    private fun parseInputForPartOne(input: String): Int =
+    private const val DIGIT = """one|two|three|four|five|six|seven|eight|nine|\d"""
+
+    override fun partOne(input: String) =
         input
             .lines()
             .map {
@@ -17,9 +19,7 @@ object Y2023D01 : Solution {
             }
             .sumOf { it.toInt() }
 
-    private const val DIGIT = """one|two|three|four|five|six|seven|eight|nine|\d"""
-
-    private fun parseInputForPartTwo(input: String): Int =
+    override fun partTwo(input: String) =
         input
             .lines()
             .asSequence()
@@ -50,8 +50,4 @@ object Y2023D01 : Solution {
             }
             .map { "${it.first}${it.second}".toInt() }
             .sum()
-
-    override fun partOne(input: String) = parseInputForPartOne(input)
-
-    override fun partTwo(input: String) = parseInputForPartTwo(input)
 }
