@@ -7,31 +7,30 @@ object Y2023D01 : Solution {
         input
             .lines()
             .map {
-                """^(?<prefix>[^\d]*)(?<firstDigit>\d?)(?<mainBody>.*)(?<secondDigit>\d)(?<suffix>[^\d]*)$"""
+                """^(?<prefix>\D*)(?<firstDigit>\d?)(?<mainBody>.*)(?<secondDigit>\d)(?<suffix>\D*)$"""
                     .toRegex()
                     .find(it)!!
             }
             .map {
-                (if (it.groups["firstDigit"]!!.value.isBlank()) it.groups["secondDigit"]!!.value
-                else it.groups["firstDigit"]!!.value) + it.groups["secondDigit"]!!.value
+                (it.groups["firstDigit"]!!.value.ifBlank { it.groups["secondDigit"]!!.value }) +
+                    it.groups["secondDigit"]!!.value
             }
-            .map { it.toInt() }
-            .sum()
+            .sumOf { it.toInt() }
 
-    val digit = """one|two|three|four|five|six|seven|eight|nine|\d"""
+    private const val DIGIT = """one|two|three|four|five|six|seven|eight|nine|\d"""
 
     private fun parseInputForPartTwo(input: String): Int =
         input
             .lines()
+            .asSequence()
             .map {
-                "^((?!$digit).)*(?<firstDigit>$digit?)(?<mainBody>.*)(?<secondDigit>$digit)((?!$digit).)*$"
+                "^((?!$DIGIT).)*(?<firstDigit>$DIGIT?)(?<mainBody>.*)(?<secondDigit>$DIGIT)((?!$DIGIT).)*$"
                     .toRegex()
                     .find(it)!!
             }
             .map {
                 Pair(
-                    (if (it.groups["firstDigit"]!!.value.isBlank()) it.groups["secondDigit"]!!.value
-                    else it.groups["firstDigit"]!!.value),
+                    (it.groups["firstDigit"]!!.value.ifBlank { it.groups["secondDigit"]!!.value }),
                     it.groups["secondDigit"]!!.value
                 )
             }
