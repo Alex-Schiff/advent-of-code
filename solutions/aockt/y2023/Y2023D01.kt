@@ -12,8 +12,8 @@ object Y2023D01 : Solution {
                     .find(it)!!
             }
             .map {
-                if (it.groups["firstDigit"]!!.value.isBlank()) it.groups["secondDigit"]!!.value
-                else it.groups["firstDigit"]!!.value + it.groups["secondDigit"]!!.value
+                (if (it.groups["firstDigit"]!!.value.isBlank()) it.groups["secondDigit"]!!.value
+                else it.groups["firstDigit"]!!.value) + it.groups["secondDigit"]!!.value
             }
             .map { it.toInt() }
             .sum()
