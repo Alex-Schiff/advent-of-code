@@ -19,6 +19,7 @@ object Y2023D01 : Solution {
             .sum()
 
     val digit = """one|two|three|four|five|six|seven|eight|nine|\d"""
+
     private fun parseInputForPartTwo(input: String): Int =
         input
             .lines()
@@ -28,23 +29,28 @@ object Y2023D01 : Solution {
                     .find(it)!!
             }
             .map {
-               Pair((if (it.groups["firstDigit"]!!.value.isBlank()) it.groups["secondDigit"]!!.value
-                else it.groups["firstDigit"]!!.value), it.groups["secondDigit"]!!.value)
+                Pair(
+                    (if (it.groups["firstDigit"]!!.value.isBlank()) it.groups["secondDigit"]!!.value
+                    else it.groups["firstDigit"]!!.value),
+                    it.groups["secondDigit"]!!.value
+                )
             }
             .map {
-               Pair( try {
-                    Digits.valueOf(it.first).digitValue
-                } catch (e: IllegalArgumentException) {
-                    it.first.toInt()
-                }, try {
-                    Digits.valueOf(it.second).digitValue
-                } catch (e: IllegalArgumentException) {
-                    it.second.toInt()
-                })
+                Pair(
+                    try {
+                        Digits.valueOf(it.first).digitValue
+                    } catch (e: IllegalArgumentException) {
+                        it.first.toInt()
+                    },
+                    try {
+                        Digits.valueOf(it.second).digitValue
+                    } catch (e: IllegalArgumentException) {
+                        it.second.toInt()
+                    }
+                )
             }
-            .map{ "${it.first}${it.second}".toInt() }
+            .map { "${it.first}${it.second}".toInt() }
             .sum()
-            
 
     override fun partOne(input: String) = parseInputForPartOne(input)
 
