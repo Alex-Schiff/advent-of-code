@@ -46,8 +46,9 @@ object Y2023D01 : Solution {
                     it.groups["secondDigit"]!!.value
                 )
             }
-            .map { it ->
-                "${DIGITS_MAP.getOrDefault(it.first, it.first)}${DIGITS_MAP.getOrDefault(it.second, it.second}".toInt()
+            .map {
+                "${DIGITS_MAP.getOrDefault(it.first, it.first)}${DIGITS_MAP.getOrDefault(it.second, it.second)}"
+                    .toInt()
             }
             .sum()
 }
