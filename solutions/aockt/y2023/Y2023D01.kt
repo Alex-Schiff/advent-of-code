@@ -4,7 +4,17 @@ import io.github.jadarma.aockt.core.Solution
 
 object Y2023D01 : Solution {
     private const val DIGIT = """one|two|three|four|five|six|seven|eight|nine|\d"""
-
+    private val Map<String, Int> DIGITS_MAP = mapOf(
+        "one" to 1,
+        "two" to 2,
+        "three" to 3,
+        "four" to 4,
+        "five" to 5,
+        "six" to 6,
+        "seven" to 7,
+        "eight" to 8,
+        "nine" to 9
+    )
     override fun partOne(input: String) =
         input
             .lines()
