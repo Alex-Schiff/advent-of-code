@@ -13,31 +13,21 @@ fun String.toGrid(): Grid = this.lines().toGrid()
 fun Grid.getAdjacents(point: Point): List<Char> {
     val list = mutableListOf<Char>()
     if (point.first > 0) {
-        if (point.second > 0) {
-            list.add(this.get(Point(point.first - 1, point.second - 1)))
-        }
-        list.add(this.get(Point(point.first - 1, point.second)))
-        if (point.second < (this.first().size - 1)) {
-            list.add(this.get(Point(point.first - 1, point.second + 1)))
-        }
+        if (point.second > 0) list.add(this.get(point.first - 1 to point.second - 1))
+        list.add(this.get(point.first - 1 to point.second))
+        if (point.second < (this.first().size - 1))
+            list.add(this.get(point.first - 1 to point.second + 1))
     }
 
-    if (point.second > 0) {
-        list.add(this.get(Point(point.first, point.second - 1)))
-    }
+    if (point.second > 0) list.add(this.get(point.first to point.second - 1))
 
-    if (point.second < (this.first().size - 1)) {
-        list.add(this.get(Point(point.first, point.second + 1)))
-    }
+    if (point.second < (this.first().size - 1)) list.add(this.get(point.first to point.second + 1))
 
     if (point.first < (this.size - 1)) {
-        if (point.second > 0) {
-            list.add(this.get(Point(point.first + 1, point.second - 1)))
-        }
-        list.add(this.get(Point(point.first + 1, point.second)))
-        if (point.second < (this.first().size - 1)) {
-            list.add(this.get(Point(point.first + 1, point.second + 1)))
-        }
+        if (point.second > 0) list.add(this.get(point.first + 1 to point.second - 1))
+        list.add(this.get(point.first + 1 to point.second))
+        if (point.second < (this.first().size - 1))
+            list.add(this.get(point.first + 1 to point.second + 1))
     }
 
     return list.toList()
@@ -69,13 +59,7 @@ fun String.extractValidNumbersSum(grid: Grid, lineIndex: Int): Int {
 }
 
 fun Grid.extractAllStarPositions(): List<Point> = flatMapIndexed { rowIndex, row ->
-    row.mapIndexedNotNull { colIndex, value ->
-        if (value == '*') {
-            rowIndex to colIndex
-        } else {
-            null
-        }
-    }
+    row.mapIndexedNotNull { colIndex, value -> if (value == '*') rowIndex to colIndex else null }
 }
 
 fun Grid.extractAllAdjacentNumbers(point: Point): List<Int> {
@@ -91,18 +75,10 @@ fun Grid.extractAdjacentSameLineLeft(point: Point): String? {
     var index = point.second - 1
     var ret = ""
     while (index >= 0) {
-        if (line[index].isDigit()) {
-            ret += line[index]
-        } else {
-            break
-        }
+        if (line[index].isDigit()) ret += line[index] else break
         index--
     }
-    return if (ret.isNotEmpty()) {
-        ret.reversed()
-    } else {
-        null
-    }
+    return if (ret.isNotEmpty()) ret.reversed() else null
 }
 
 fun Grid.extractAdjacentSameLineRight(point: Point): String? {
@@ -110,41 +86,33 @@ fun Grid.extractAdjacentSameLineRight(point: Point): String? {
     var index = point.second + 1
     var ret = ""
     while (index > 0 && index < line.size) {
-        if (line[index].isDigit()) {
-            ret += line[index]
-        } else {
-            break
-        }
+        if (line[index].isDigit()) ret += line[index] else break
         index++
     }
     return ret.ifEmpty { null }
 }
 
 fun Grid.extractAdjacentPrevLine(point: Point): List<Int> {
-    if (point.first <= 0) {
-        return listOf()
-    }
+    if (point.first <= 0) return listOf()
 
     val upper = point.first - 1 to point.second
     return extractAdjacentToPoint(upper)
 }
 
 fun Grid.extractAdjacentNextLine(point: Point): List<Int> {
-    if (point.first >= this.size - 1) {
-        return listOf()
-    }
+    if (point.first >= this.size - 1) return listOf()
 
     val lower = point.first + 1 to point.second
     return extractAdjacentToPoint(lower)
 }
 
 fun Grid.extractAdjacentToPoint(point: Point): List<Int> {
-    return if (!get(point).isDigit()) {
+    return if (!get(point).isDigit())
         listOfNotNull(
             extractAdjacentSameLineLeft(point)?.toInt(),
             extractAdjacentSameLineRight(point)?.toInt(),
         )
-    } else {
+    else {
         val left = (extractAdjacentSameLineLeft(point) ?: "").toString()
         val right = (extractAdjacentSameLineRight(point) ?: "").toString()
         val ret = "$left${get(point)}$right".toInt()
