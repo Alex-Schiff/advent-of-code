@@ -4,55 +4,49 @@ typealias Grid = List<List<Char>>
 
 typealias Point = Pair<Int, Int>
 
-fun Grid.get(coordinates: Point?): Char? {
-    return if (coordinates == null) {
-        null
-    } else {
-        this[coordinates.first][coordinates.second]
-    }
-}
+fun Grid.get(point: Point): Char = this[point.first][point.second]
 
 fun List<String>.toGrid(): Grid = this.map { it.toCharArray().toList() }
 
 fun String.toGrid(): Grid = this.lines().toGrid()
 
-fun Grid.getAdjacents(coordinates: Point): List<Char> {
-    val ret = mutableListOf<Char>()
-    if (coordinates.first > 0) {
-        if (coordinates.second > 0) {
-            ret.add(this[coordinates.first - 1][coordinates.second - 1])
+fun Grid.getAdjacents(point: Point): List<Char> {
+    val list = mutableListOf<Char>()
+    if (point.first > 0) {
+        if (point.second > 0) {
+            list.add(this.get(Point(point.first - 1, point.second - 1)))
         }
-        ret.add(this[coordinates.first - 1][coordinates.second])
-        if (coordinates.second < (this.first().size - 1)) {
-            ret.add(this[coordinates.first - 1][coordinates.second + 1])
-        }
-    }
-
-    if (coordinates.second > 0) {
-        ret.add(this[coordinates.first][coordinates.second - 1])
-    }
-
-    if (coordinates.second < (this.first().size - 1)) {
-        ret.add(this[coordinates.first][coordinates.second + 1])
-    }
-
-    if (coordinates.first < (this.size - 1)) {
-        if (coordinates.second > 0) {
-            ret.add(this[coordinates.first + 1][coordinates.second - 1])
-        }
-        ret.add(this[coordinates.first + 1][coordinates.second])
-        if (coordinates.second < (this.first().size - 1)) {
-            ret.add(this[coordinates.first + 1][coordinates.second + 1])
+        list.add(this.get(Point(point.first - 1, point.second)))
+        if (point.second < (this.first().size - 1)) {
+            list.add(this.get(Point(point.first - 1, point.second + 1)))
         }
     }
 
-    return ret.toList()
+    if (point.second > 0) {
+        list.add(this.get(Point(point.first, point.second - 1)))
+    }
+
+    if (point.second < (this.first().size - 1)) {
+        list.add(this.get(Point(point.first, point.second + 1)))
+    }
+
+    if (point.first < (this.size - 1)) {
+        if (point.second > 0) {
+            list.add(this.get(Point(point.first + 1, point.second - 1)))
+        }
+        list.add(this.get(Point(point.first + 1, point.second)))
+        if (point.second < (this.first().size - 1)) {
+            list.add(this.get(Point(point.first + 1, point.second + 1)))
+        }
+    }
+
+    return list.toList()
 }
 
-fun Grid.isValidDigit(coordinates: Point): Boolean =
-    getAdjacents(coordinates).any { !it.isDigit() && it != '.' }
+fun Grid.isValidDigit(point: Point): Boolean =
+    getAdjacents(point).any { !it.isDigit() && it != '.' }
 
-public fun String.extractValidNumbersSum(grid: Grid, lineIndex: Int): Int {
+fun String.extractValidNumbersSum(grid: Grid, lineIndex: Int): Int {
     var sum = 0
 
     var currentNumber = ""
@@ -145,7 +139,7 @@ fun Grid.extractAdjacentNextLine(point: Point): List<Int> {
 }
 
 fun Grid.extractAdjacentToPoint(point: Point): List<Int> {
-    return if (!get(point)!!.isDigit()) {
+    return if (!get(point).isDigit()) {
         listOfNotNull(
             extractAdjacentSameLineLeft(point)?.toInt(),
             extractAdjacentSameLineRight(point)?.toInt(),
@@ -153,7 +147,7 @@ fun Grid.extractAdjacentToPoint(point: Point): List<Int> {
     } else {
         val left = (extractAdjacentSameLineLeft(point) ?: "").toString()
         val right = (extractAdjacentSameLineRight(point) ?: "").toString()
-        val ret = "$left${get(point)!!}$right".toInt()
+        val ret = "$left${get(point)}$right".toInt()
         listOf(ret)
     }
 }
