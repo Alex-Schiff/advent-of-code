@@ -26,4 +26,15 @@ object Y2023D02 : Solution {
                 }
             }
             .sum()
+
+    override fun partTwo(input: String): Int =
+        input
+            .lines()
+            .map {
+                val redNeeded = findRequiredDice(it, "red")
+                val greenNeeded = findRequiredDice(it, "green")
+                val blueNeeded = findRequiredDice(it, "blue")
+                redNeeded * greenNeeded * blueNeeded
+            }
+            .sum()
 }
