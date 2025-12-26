@@ -31,7 +31,7 @@ repositories {
 }
 
 dependencies {
-    val aocktVersion = "0.1.0"
+    val aocktVersion = "0.3.0"
     val kotestVersion = "6.0.7"
 
     implementation("io.github.jadarma.aockt:aockt-core:$aocktVersion")
