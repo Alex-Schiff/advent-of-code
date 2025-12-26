@@ -5,7 +5,7 @@ import org.gradle.kotlin.dsl.KotlinClosure2
 
 plugins {
     kotlin("jvm") version "2.3.0"
-    id("com.ncorti.ktfmt.gradle") version "0.15.1"
+    id("com.ncorti.ktfmt.gradle") version "0.25.0"
 }
 
 kotlin {
